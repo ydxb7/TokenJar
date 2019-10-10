@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/blue_round_corner_rectangle">
+
+    <TextView
+            android:id="@+id/walletNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="wallet name" />
+
+    <TextView
+            android:id="@+id/walletAddressTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/walletNameTv"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            tools:text="0x3bAF284A4b...6fFD" />
+
+    <ImageView
+            android:id="@+id/ellipsisIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ellipsis_icon"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"/>
+
+</RelativeLayout>
