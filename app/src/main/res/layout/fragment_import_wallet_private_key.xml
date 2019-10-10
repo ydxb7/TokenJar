@@ -21,6 +21,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:gravity="top"
+                android:padding="10dp"
+                android:background="@drawable/grey_border_round_rectangle"
                 android:hint="Enter Private Key"
                 android:inputType="textCapSentences|textNoSuggestions|textMultiLine"
                 android:maxLines="3"

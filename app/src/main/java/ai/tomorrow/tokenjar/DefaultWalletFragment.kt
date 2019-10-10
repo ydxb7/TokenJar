@@ -22,6 +22,11 @@ class DefaultWalletFragment : Fragment(){
             it.findNavController().navigate(direction)
         }
 
+        binding.sendBtn.setOnClickListener{
+            val direction = HomeViewPagerFragmentDirections.actionHomeViewPagerFragment2ToSendEthFragment()
+            it.findNavController().navigate(direction)
+        }
+
 
 
         return binding.root

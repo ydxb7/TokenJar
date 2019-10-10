@@ -12,6 +12,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="grey">#bfbfbf</color>
+    <color name="darkGrey">#404040</color>
     <color name="green">#006600</color>
     <color name="red">#990000</color>
 </resources>
