@@ -12,7 +12,7 @@ const val MANAGE_WALLETS_PAGER_INDEX = 1
 const val ADDRESS_BOOK_PAGER_INDEX = 2
 
 
-class TokenPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private val tabFragmentCreators: Map<Int, () -> Fragment> = mapOf(
         DEFAULT_WALLET_PAGER_INDEX to { DefaultWalletFragment() },

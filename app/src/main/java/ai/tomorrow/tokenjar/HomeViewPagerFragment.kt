@@ -3,14 +3,12 @@ package ai.tomorrow.tokenjar
 import ai.tomorrow.tokenjar.adapters.ADDRESS_BOOK_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.DEFAULT_WALLET_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.MANAGE_WALLETS_PAGER_INDEX
-import ai.tomorrow.tokenjar.adapters.TokenPagerAdapter
-import ai.tomorrow.tokenjar.databinding.FragmentViewPagerBinding
+import ai.tomorrow.tokenjar.adapters.HomePagerAdapter
+import ai.tomorrow.tokenjar.databinding.FragmentViewPagerHomeBinding
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -19,11 +17,11 @@ class HomeViewPagerFragment : Fragment(){
     private val TAG = "HomeViewPagerFragment"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentViewPagerBinding.inflate(inflater, container, false)
+        val binding = FragmentViewPagerHomeBinding.inflate(inflater, container, false)
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager
 
-        viewPager.adapter = TokenPagerAdapter(this)
+        viewPager.adapter = HomePagerAdapter(this)
 
         TabLayoutMediator(tabLayout, viewPager){ tab, position ->
             tab.setIcon(getTabIcon(position))
