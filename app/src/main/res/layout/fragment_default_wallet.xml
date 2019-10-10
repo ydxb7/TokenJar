@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
->
+        xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -11,12 +11,107 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+            <!--            Toolbar            -->
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/defaultWalletToolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <ImageView
+                                android:id="@+id/selectWalletBtn"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/line3_icon" />
+
+                        <TextView
+                                android:id="@+id/walletNameTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/black"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                tools:text="wallet name" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/walletNameTv"
+                                android:layout_centerHorizontal="true"
+                                tools:text="0x3bAF...FD" />
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--                 body                  -->
+            <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/app_bar_layout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/eth_logo" />
+
+            <TextView
+                    android:id="@+id/balanceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/logo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    tools:text="2.432 ETH" />
+
+            <Button
+                    android:id="@+id/sendBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/balanceTv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/send_button"
+                    android:text="send"
+                    android:textColor="@color/secondaryDarkColor"
+                    android:textSize="20dp" />
+
+            <TextView
+                    android:id="@+id/historyTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sendBtn"
+                    android:text="History"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/historyTv"
+                    android:id="@+id/historyRecyclerView"/>
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="default wallet"
                     android:layout_centerInParent="true"
-                    android:textSize="40sp"/>
+                    android:text="default wallet"
+                    android:textSize="45sp" />
 
         </RelativeLayout>
     </FrameLayout>
