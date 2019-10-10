@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            <!--            Toolbar            -->
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/defaultWalletToolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <ImageView
+                                android:id="@+id/backBtn"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_centerVertical="true"
+                                android:padding="10dp"
+                                android:src="@drawable/back_icon" />
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="Manage"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <TextView
+                    android:id="@+id/walletNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_bar_layout"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/white"
+                    android:paddingStart="24dp"
+                    android:paddingTop="8dp"
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    tools:text="wallet name" />
+
+            <TextView
+                    android:id="@+id/walletAddressTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/walletNameTv"
+                    android:background="@color/white"
+                    android:paddingStart="24dp"
+                    android:paddingBottom="8dp"
+                    tools:text="0x3bAF...6fFD" />
+
+            <TextView
+                    android:id="@+id/exportMnemonic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/walletAddressTv"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/white_grey_border_bottom"
+                    android:padding="24dp"
+                    android:text="Export Mnemonic Phrase"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+
+            <TextView
+                    android:id="@+id/exportKeystore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exportMnemonic"
+                    android:background="@drawable/white_grey_border_bottom"
+                    android:padding="24dp"
+                    android:text="Export Keystore"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            <TextView
+                    android:id="@+id/exportPrivateKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exportKeystore"
+                    android:background="@drawable/white_grey_border_bottom"
+                    android:padding="24dp"
+                    android:text="Export Private Key"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+            <TextView
+                    android:id="@+id/deleteWallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exportPrivateKey"
+                    android:background="@drawable/white_grey_border_bottom"
+                    android:padding="24dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Delete Wallet"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="18sp" />
+
+
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="manage"
+                    android:textSize="30sp" />
+
+        </RelativeLayout>
+    </FrameLayout>
+
+</layout>

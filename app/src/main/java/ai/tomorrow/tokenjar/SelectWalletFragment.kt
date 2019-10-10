@@ -1,4 +1,4 @@
-package ai.tomorrow.tokenjar.adapters
+package ai.tomorrow.tokenjar
 
 import ai.tomorrow.tokenjar.databinding.FragmentSelectWalletBinding
 import android.os.Bundle
