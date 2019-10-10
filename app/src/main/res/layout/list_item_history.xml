@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="@drawable/white_grey_border_top">
+
+    <TextView
+            android:id="@+id/timeTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10/9/2019 at 19:31" />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timeTv"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:text="From: 0x3bAF284A...fFD"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            tools:text="+2.1 ETH"
+            android:layout_centerVertical="true"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+        />
+
+</RelativeLayout>
