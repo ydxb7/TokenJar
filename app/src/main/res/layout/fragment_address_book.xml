@@ -1,21 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
->
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+
+            <!--            Toolbar            -->
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/app_bar_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/defaultWalletToolBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="Address Book"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </androidx.appcompat.widget.Toolbar>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--                 body                  -->
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addressBookRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/app_bar_layout"
+                    android:layout_marginTop="16dp" />
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="30sp"
+                    android:layout_centerInParent="true"
                     android:text="address book"
-                    android:layout_centerInParent="true"/>
+                    android:textSize="30sp" />
 
         </RelativeLayout>
     </FrameLayout>
