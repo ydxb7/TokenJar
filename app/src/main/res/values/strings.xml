@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TokenJar</string>
+
+    <string name="default_wallet">wallet</string>
+    <string name="manage_wallets">manage wallets</string>
+    <string name="address_book">address book</string>
+</resources>

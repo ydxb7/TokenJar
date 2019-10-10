@@ -1,0 +1,21 @@
+package ai.tomorrow.tokenjar
+
+import ai.tomorrow.tokenjar.databinding.FragmentDefaultWalletBinding
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+
+class DefaultWalletFragment : Fragment(){
+
+    private lateinit var binding: FragmentDefaultWalletBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        binding = FragmentDefaultWalletBinding.inflate(inflater, container, false)
+
+
+        return binding.root
+    }
+}
