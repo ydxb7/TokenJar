@@ -13,6 +13,9 @@
         <action
                 android:id="@+id/action_homeViewPagerFragment2_to_addressDetailFragment"
                 app:destination="@id/addressDetailFragment" />
+        <action
+                android:id="@+id/action_homeViewPagerFragment2_to_importWalletViewPagerFragment"
+                app:destination="@id/importWalletViewPagerFragment" />
     </fragment>
     <fragment
             android:id="@+id/selectWalletFragment"
@@ -26,4 +29,8 @@
             android:id="@+id/addressDetailFragment"
             android:name="ai.tomorrow.tokenjar.AddressDetailFragment"
             android:label="AddressDetailFragment" />
+    <fragment
+            android:id="@+id/importWalletViewPagerFragment"
+            android:name="ai.tomorrow.tokenjar.ImportWalletViewPagerFragment"
+            android:label="ImportWalletViewPagerFragment" />
 </navigation>

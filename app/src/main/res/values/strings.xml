@@ -4,4 +4,7 @@
     <string name="default_wallet">wallet</string>
     <string name="manage_wallets">manage wallets</string>
     <string name="address_book">address book</string>
+    <string name="keystore">Keystore</string>
+    <string name="mnemonic">Mnemonic</string>
+    <string name="private_key">Private Key</string>
 </resources>
