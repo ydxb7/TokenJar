@@ -158,6 +158,20 @@
                     android:paddingBottom="8dp"
                     android:background="@color/white"/>
 
+            <TextView
+                    android:id="@+id/deleteAddressTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/descriptionTv"
+                    android:padding="24dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Delete Address"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    android:textSize="18sp"
+                    android:background="@color/white"/>
+
 
             <TextView
                     android:layout_width="wrap_content"
