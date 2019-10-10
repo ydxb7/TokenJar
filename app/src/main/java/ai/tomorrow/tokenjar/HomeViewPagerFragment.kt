@@ -27,13 +27,12 @@ class HomeViewPagerFragment : Fragment(){
             tab.text = getTabTitle(position)
         }.attach()
 
-//        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
 
         return binding.root
     }
 
     private fun getTabIcon(position: Int): Int {
-//        Log.d(TAG, "position = $position")
         return when (position) {
             DEFAULT_WALLET_PAGER_INDEX -> R.drawable.dollar_icon
             MANAGE_WALLETS_PAGER_INDEX -> R.drawable.manage_icon
