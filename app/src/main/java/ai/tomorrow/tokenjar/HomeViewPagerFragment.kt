@@ -1,6 +1,5 @@
 package ai.tomorrow.tokenjar
 
-import ai.tomorrow.tokenjar.adapters.ADDRESS_BOOK_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.DEFAULT_WALLET_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.MANAGE_WALLETS_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.HomePagerAdapter
@@ -38,7 +37,6 @@ class HomeViewPagerFragment : Fragment(){
         return when (position) {
             DEFAULT_WALLET_PAGER_INDEX -> R.drawable.dollar_icon
             MANAGE_WALLETS_PAGER_INDEX -> R.drawable.manage_icon
-            ADDRESS_BOOK_PAGER_INDEX -> R.drawable.book_icon
             else -> throw IndexOutOfBoundsException()
         }
     }
@@ -47,7 +45,6 @@ class HomeViewPagerFragment : Fragment(){
         return when (position) {
             DEFAULT_WALLET_PAGER_INDEX -> getString(R.string.default_wallet)
             MANAGE_WALLETS_PAGER_INDEX -> getString(R.string.manage_wallets)
-            ADDRESS_BOOK_PAGER_INDEX -> getString(R.string.address_book)
             else -> null
         }
     }

@@ -1,6 +1,5 @@
 package ai.tomorrow.tokenjar.adapters
 
-import ai.tomorrow.tokenjar.AddressBookFragment
 import ai.tomorrow.tokenjar.DefaultWalletFragment
 import ai.tomorrow.tokenjar.ManageWalletsFragment
 import androidx.fragment.app.Fragment
@@ -9,15 +8,13 @@ import java.lang.IndexOutOfBoundsException
 
 const val DEFAULT_WALLET_PAGER_INDEX = 0
 const val MANAGE_WALLETS_PAGER_INDEX = 1
-const val ADDRESS_BOOK_PAGER_INDEX = 2
 
 
 class HomePagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     private val tabFragmentCreators: Map<Int, () -> Fragment> = mapOf(
         DEFAULT_WALLET_PAGER_INDEX to { DefaultWalletFragment() },
-        MANAGE_WALLETS_PAGER_INDEX to { ManageWalletsFragment() },
-        ADDRESS_BOOK_PAGER_INDEX to { AddressBookFragment() }
+        MANAGE_WALLETS_PAGER_INDEX to { ManageWalletsFragment() }
     )
 
     override fun getItemCount() = tabFragmentCreators.size
