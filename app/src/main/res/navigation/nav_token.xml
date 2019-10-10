@@ -3,5 +3,13 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/nav_token" app:startDestination="@id/homeViewPagerFragment2">
     <fragment android:id="@+id/homeViewPagerFragment2" android:name="ai.tomorrow.tokenjar.HomeViewPagerFragment"
-              android:label="HomeViewPagerFragment"/>
+              android:label="HomeViewPagerFragment">
+        <action
+                android:id="@+id/action_homeViewPagerFragment2_to_selectWalletFragment"
+                app:destination="@id/selectWalletFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/selectWalletFragment"
+            android:name="ai.tomorrow.tokenjar.adapters.SelectWalletFragment"
+            android:label="SelectWalletFragment" />
 </navigation>
