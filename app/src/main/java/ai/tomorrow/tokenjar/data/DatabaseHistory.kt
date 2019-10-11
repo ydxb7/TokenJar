@@ -1,18 +1,14 @@
-package ai.tomorrow.tokenjar.network
+package ai.tomorrow.tokenjar.data
 
-import ai.tomorrow.tokenjar.data.DatabaseHistory
+import ai.tomorrow.tokenjar.network.History
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-data class ResultResponse(
-    val status: Int,
-    val message: String,
-    val result: List<History>
-)
-
-data class History(
+@Entity(tableName = "history_table")
+data class DatabaseHistory constructor(
     val blockNumber: Long,
     val timeStamp: Long,
+    @PrimaryKey
     val hash: String,
     val nonce: Long,
     val blockHash: String,
@@ -28,9 +24,9 @@ data class History(
     val confirmations: Long
 )
 
-fun List<History>.asDatabaseModel(): Array<DatabaseHistory> {
+fun List<DatabaseHistory>.asDomainModel(): List<History> {
     return map {
-        DatabaseHistory(
+        History(
             blockNumber = it.blockNumber,
             timeStamp = it.timeStamp,
             hash = it.hash,
@@ -45,6 +41,7 @@ fun List<History>.asDatabaseModel(): Array<DatabaseHistory> {
             isError = it.isError,
             cumulativeGasUsed = it.cumulativeGasUsed,
             gasUsed = it.gasUsed,
-            confirmations = it.confirmations)
-    }.toTypedArray()
+            confirmations = it.confirmations
+        )
+    }
 }

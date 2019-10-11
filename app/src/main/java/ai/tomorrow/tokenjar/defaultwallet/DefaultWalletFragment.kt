@@ -2,6 +2,7 @@ package ai.tomorrow.tokenjar.defaultwallet
 
 import ai.tomorrow.tokenjar.HomeViewPagerFragmentDirections
 import ai.tomorrow.tokenjar.adapters.ManageWalletAdapter
+import ai.tomorrow.tokenjar.data.HistoryDatabase
 import ai.tomorrow.tokenjar.data.WalletDatabase
 import ai.tomorrow.tokenjar.databinding.FragmentDefaultWalletBinding
 import android.os.Bundle
@@ -22,7 +23,10 @@ class DefaultWalletFragment : Fragment(){
 
     private val viewModel: DefaultWalletViewModel by viewModels {
         val application = requireNotNull(this.activity).application
-        DefaultWalletViewModelFactory(WalletDatabase.getInstance(application).walletDatabaseDao)
+        DefaultWalletViewModelFactory(
+            WalletDatabase.getInstance(application).walletDatabaseDao,
+            HistoryDatabase.getInstance(application)
+            )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -55,7 +59,8 @@ class DefaultWalletFragment : Fragment(){
             Log.d(TAG, "current wallet = $wallet")
             if(wallet != null){
                 viewModel.startUpdateBalance()
-                viewModel.getHistory(wallet.address)
+                viewModel.refreshDataFromNetwork(wallet.address)
+//                refreshHistories
                 binding.hasWallet = true
             } else{
                 binding.hasWallet = false

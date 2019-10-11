@@ -1,10 +1,6 @@
 package ai.tomorrow.tokenjar.defaultwallet
 
-import ai.tomorrow.tokenjar.data.EthWallet
-import ai.tomorrow.tokenjar.data.WalletDatabaseDao
-import ai.tomorrow.tokenjar.network.EtherscanApi
-import ai.tomorrow.tokenjar.network.History
-import ai.tomorrow.tokenjar.network.ResultResponse
+import ai.tomorrow.tokenjar.data.*
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
@@ -19,23 +15,22 @@ import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.lang.Exception
 import java.math.BigDecimal
 
 const val UPDATE_FREQUENCY = 30000L
 const val API_KEY_TOKEN = "ZBE4XGYMYQ1R164QY3VY4S5TFFGHRYNEEI"
 
 class DefaultWalletViewModel internal constructor(
-    val database: WalletDatabaseDao
+    val database: WalletDatabaseDao,
+    val historyDatabase: HistoryDatabase
 ) : ViewModel() {
     private val TAG = "DefaultWalletViewModel"
 
     private var uiHandler = Handler()
     private lateinit var backgroundHandler: Handler
     private lateinit var backgroundThread: HandlerThread
+
+    val repository = HistoryRepository(historyDatabase)
 
     val wallet: LiveData<EthWallet?> = database.getFirstWallet()
 
@@ -46,13 +41,13 @@ class DefaultWalletViewModel internal constructor(
         get() = _balanceString
 
 
-    private val _historyResponse = MutableLiveData<List<History>>()
-    val historyResponse: LiveData<List<History>>
+    private val _historyResponse = MutableLiveData<List<DatabaseHistory>>()
+    val historyResponse: LiveData<List<DatabaseHistory>>
         get() = _historyResponse
 
 
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main )
+    private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private val backgroundThreadRunner = object : Runnable {
         override fun run() {
@@ -102,34 +97,45 @@ class DefaultWalletViewModel internal constructor(
     }
 
 
-    fun getHistory(address: String) {
-
+    fun refreshHistory(address: String) {
         uiScope.launch {
-
-            var getHistoryDeferred = EtherscanApi.retrofitService.getHistory(
-                "account",
-                "txlist",
-                address,
-                0,
-                99999999,
-                1,
-                10,
-                "asc",
-                API_KEY_TOKEN
-            )
-
-            try {
-                var response = getHistoryDeferred.await()
-                _historyResponse.value = response.result
-                Log.d(TAG, "_historyResponse.value size = ${_historyResponse.value?.size}")
-                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
-            } catch (e: Exception){
-                Log.d(TAG, "Fail: ${e.message}")
-                _historyResponse.value = null
-            }
-
+            repository.refreshHistories(address)
         }
+
     }
+
+    fun refreshDataFromNetwork(address: String) = uiScope.launch {
+        repository.refreshHistories(address)
+    }
+
+//    fun getHistory(address: String) {
+//
+//        uiScope.launch {
+//
+//            var getHistoryDeferred = EtherscanApi.retrofitService.getHistory(
+//                "account",
+//                "txlist",
+//                address,
+//                0,
+//                99999999,
+//                1,
+//                10,
+//                "asc",
+//                API_KEY_TOKEN
+//            )
+//
+//            try {
+//                var response = getHistoryDeferred.await()
+//                _historyResponse.value = response.result
+//                Log.d(TAG, "_historyResponse.value size = ${_historyResponse.value?.size}")
+//                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
+//            } catch (e: Exception){
+//                Log.d(TAG, "Fail: ${e.message}")
+//                _historyResponse.value = null
+//            }
+//
+//        }
+//    }
 
     override fun onCleared() {
         super.onCleared()
