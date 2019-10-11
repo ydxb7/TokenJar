@@ -18,8 +18,8 @@ interface WalletDatabaseDao {
     @Query("SELECT * from eth_wallet_table WHERE walletId = :key")
     fun getWallet(key: Long): EthWallet?
 
-    @Query("DELETE FROM eth_wallet_table")
-    fun clear()
+//    @Query("DELETE FROM eth_wallet_table")
+//    fun clear()
 
     @Query("SELECT * FROM eth_wallet_table ORDER BY walletId ASC")
     fun getWallets(): LiveData<List<EthWallet>>

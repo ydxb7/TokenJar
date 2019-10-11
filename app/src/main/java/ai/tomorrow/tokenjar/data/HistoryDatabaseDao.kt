@@ -12,7 +12,7 @@ interface HistoryDatabaseDao {
     @Query("select * from history_table ORDER BY timeStamp DESC")
     fun getAllHistory(): LiveData<List<DatabaseHistory>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg histories: DatabaseHistory)
 }
 

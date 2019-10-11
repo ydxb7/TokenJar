@@ -20,7 +20,7 @@ class DefaultWalletFragment : Fragment(){
     private val TAG = "DefaultWalletFragment"
 
     private lateinit var binding: FragmentDefaultWalletBinding
-    private var adapter: HistoryAdapter? = null
+//    private var adapter: HistoryAdapter? = null
 
     private val viewModel: DefaultWalletViewModel by viewModels {
         val application = requireNotNull(this.activity).application
@@ -36,9 +36,10 @@ class DefaultWalletFragment : Fragment(){
 
         binding.viewModel = viewModel
 
+        val adapter = HistoryAdapter()
+        binding.historyRecyclerView.adapter = HistoryAdapter()
 
-
-        subscribeUi()
+        subscribeUi(adapter)
 
         binding.selectWalletBtn.setOnClickListener{
             val direction =
@@ -57,15 +58,16 @@ class DefaultWalletFragment : Fragment(){
         return binding.root
     }
 
-    private fun subscribeUi() {
+    private fun subscribeUi(adapter: HistoryAdapter) {
         viewModel.wallet.observe(viewLifecycleOwner) { wallet ->
             Log.d(TAG, "current wallet = $wallet")
             if(wallet != null){
+                Log.d(TAG, "wallet != null")
                 viewModel.startUpdateBalance()
                 viewModel.refreshHistoryDatabaseFromNetwork(wallet.address)
-                adapter = HistoryAdapter(wallet.address)
-                binding.historyRecyclerView.adapter = adapter
-//                refreshHistories
+
+                adapter.setAddress(wallet.address)
+
                 binding.hasWallet = true
             } else{
                 binding.hasWallet = false
@@ -75,7 +77,10 @@ class DefaultWalletFragment : Fragment(){
         viewModel.allHistories.observe(viewLifecycleOwner) { histories ->
             Log.d(TAG, "histories size = ${histories.size}")
             Log.d(TAG, "histories = ${histories}")
-            adapter?.submitList(histories)
+            Log.d(TAG, "viewModel.allHistories = ${viewModel.allHistories.value}")
+            Log.d(TAG, "adapter = $adapter}")
+
+            adapter.submitList(histories)
         }
     }
 
