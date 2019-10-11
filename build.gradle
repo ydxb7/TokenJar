@@ -4,9 +4,9 @@ buildscript {
     // Define versions in a single place
     ext {
         // Sdk and tools
-        compileSdkVersion = 28
+        compileSdkVersion = 29
         minSdkVersion = 19
-        targetSdkVersion = 28
+        targetSdkVersion = 29
 
         // App dependencies
         appCompatVersion = '1.1.0-beta01'
@@ -47,10 +47,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "com.diffplug.gradle.spotless" version "3.24.0"
-}
-
 allprojects {
     repositories {
         google()
@@ -59,9 +55,6 @@ allprojects {
     }
 }
 
-spotless {
-    kotlin {
-        target "**/*.kt"
-        ktlint(ktlintVersion).userData(['max_line_length' : '100'])
-    }
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
