@@ -10,17 +10,20 @@ import androidx.room.Update
 interface WalletDatabaseDao {
 
     @Insert
-    suspend fun insert(wallet: EthWallet)
+    fun insertWallet(wallet: EthWallet)
 
     @Update
-    suspend fun update(wallet: EthWallet)
+    fun update(wallet: EthWallet)
 
     @Query("SELECT * from eth_wallet_table WHERE walletId = :key")
-    suspend fun getWallet(key: Long): EthWallet?
+    fun getWallet(key: Long): EthWallet?
 
     @Query("DELETE FROM eth_wallet_table")
-    suspend fun clear()
+    fun clear()
 
     @Query("SELECT * FROM eth_wallet_table ORDER BY walletId ASC")
     fun getWallets(): LiveData<List<EthWallet>>
+
+    @Query("SELECT * FROM eth_wallet_table ORDER BY walletId ASC LIMIT 1")
+    fun getFirstWallet(): EthWallet?
 }

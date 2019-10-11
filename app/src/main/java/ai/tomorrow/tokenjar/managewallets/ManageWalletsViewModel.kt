@@ -1,7 +1,7 @@
 package ai.tomorrow.tokenjar.managewallets
 
 import ai.tomorrow.tokenjar.data.EthWallet
-import ai.tomorrow.tokenjar.data.WalletRepository
+import ai.tomorrow.tokenjar.data.WalletDatabaseDao
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,10 +11,10 @@ import kotlinx.coroutines.launch
  * ViewModel for ManageWalletsFragment.
  */
 class ManageWalletsViewModel internal constructor(
-    walletRepository: WalletRepository
+    val database: WalletDatabaseDao
 ) : ViewModel() {
     val allWallets: LiveData<List<EthWallet>> =
-        walletRepository.getWallets()
+        database.getWallets()
 
 //    init {
 //        viewModelScope.launch {

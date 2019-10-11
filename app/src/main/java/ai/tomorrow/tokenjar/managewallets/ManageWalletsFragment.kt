@@ -2,11 +2,8 @@ package ai.tomorrow.tokenjar.managewallets
 
 import ai.tomorrow.tokenjar.HomeViewPagerFragmentDirections
 import ai.tomorrow.tokenjar.adapters.ManageWalletAdapter
-import ai.tomorrow.tokenjar.data.EthWallet
 import ai.tomorrow.tokenjar.data.WalletDatabase
-import ai.tomorrow.tokenjar.data.WalletRepository
 import ai.tomorrow.tokenjar.databinding.FragmentManageWalletsBinding
-import ai.tomorrow.tokenjar.utilities.InjectorUtils
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +19,7 @@ class ManageWalletsFragment : Fragment(){
 
     private val viewModel: ManageWalletsViewModel by viewModels {
         val application = requireNotNull(this.activity).application
-        ManageWalletsViewModelFactory(WalletRepository.getInstance(WalletDatabase.getInstance(application).walletDatabaseDao))
+        ManageWalletsViewModelFactory(WalletDatabase.getInstance(application).walletDatabaseDao)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

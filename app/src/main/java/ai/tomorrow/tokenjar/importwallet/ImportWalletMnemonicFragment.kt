@@ -2,7 +2,6 @@ package ai.tomorrow.tokenjar.importwallet
 
 import ai.tomorrow.tokenjar.data.EthWallet
 import ai.tomorrow.tokenjar.data.WalletDatabase
-import ai.tomorrow.tokenjar.data.WalletRepository
 import ai.tomorrow.tokenjar.databinding.FragmentImportWalletMnemonicBinding
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +27,7 @@ class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
     private lateinit var identity: Identity
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
+    private val database = WalletDatabase.getInstance(requireContext()).walletDatabaseDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,9 +63,7 @@ class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
 
     private suspend fun insert(wallet: EthWallet) {
         withContext(Dispatchers.IO) {
-            val walletRepository =
-                WalletRepository.getInstance(WalletDatabase.getInstance(requireContext()).walletDatabaseDao)
-            walletRepository.insertWallet(wallet)
+            database.insertWallet(wallet)
         }
         Log.d(TAG, "successfully insert the wallet!")
     }
