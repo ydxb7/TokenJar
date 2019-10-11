@@ -55,6 +55,7 @@ class DefaultWalletFragment : Fragment(){
             Log.d(TAG, "current wallet = $wallet")
             if(wallet != null){
                 viewModel.startUpdateBalance()
+                viewModel.getHistory(wallet.address)
                 binding.hasWallet = true
             } else{
                 binding.hasWallet = false

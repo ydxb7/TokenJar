@@ -21,6 +21,7 @@ import retrofit2.Response
 import java.math.BigDecimal
 
 const val UPDATE_FREQUENCY = 30000L
+const val API_KEY_TOKEN = "ZBE4XGYMYQ1R164QY3VY4S5TFFGHRYNEEI"
 
 class DefaultWalletViewModel internal constructor(
     val database: WalletDatabaseDao
@@ -65,7 +66,6 @@ class DefaultWalletViewModel internal constructor(
         backgroundThread = HandlerThread("backgroundHandler")
         backgroundThread.start()
         backgroundHandler = Handler(backgroundThread.looper)
-        getHistory()
     }
 
     fun startUpdateBalance() {
@@ -93,18 +93,18 @@ class DefaultWalletViewModel internal constructor(
     }
 
 
-    private fun getHistory() {
+    fun getHistory(address: String) {
 
         EtherscanApi.retrofitService.getHistory(
             "account",
             "txlist",
-            "0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
+            address,
             0,
             99999999,
             1,
             10,
             "asc",
-            "YourApiKeyToken"
+            API_KEY_TOKEN
         ).enqueue( object: Callback<ResultResponse> {
             override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
                 _historyResponse.value = null
