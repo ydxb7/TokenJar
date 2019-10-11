@@ -2,6 +2,7 @@ package ai.tomorrow.tokenjar.importwallet
 
 import ai.tomorrow.tokenjar.data.EthWallet
 import ai.tomorrow.tokenjar.data.WalletDatabase
+import ai.tomorrow.tokenjar.data.WalletDatabaseDao
 import ai.tomorrow.tokenjar.databinding.FragmentImportWalletMnemonicBinding
 import android.os.Bundle
 import android.util.Log
@@ -27,7 +28,7 @@ class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
     private lateinit var identity: Identity
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
-    private val database = WalletDatabase.getInstance(requireContext()).walletDatabaseDao
+    private lateinit var database : WalletDatabaseDao
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +39,8 @@ class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
 
         WalletManager.storage = this
         WalletManager.scanWallets()
+
+        database = WalletDatabase.getInstance(requireContext()).walletDatabaseDao
 
         binding.importWalletBtn.setOnClickListener {
             if (binding.walletPasswordEt.text.isEmpty() || binding.repeatPasswordEt.text.isEmpty()) {
@@ -100,7 +103,7 @@ class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
         Log.d(TAG, "wallet.name = ${wallet.name}")
         return wallet
     }
-
+//
     override fun getKeystoreDir(): File {
 //        Log.d(TAG, "getKeystoreDir = $filesDir")
         return requireActivity().filesDir
