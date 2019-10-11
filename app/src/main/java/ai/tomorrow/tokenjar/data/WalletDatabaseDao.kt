@@ -10,7 +10,7 @@ import androidx.room.Update
 interface WalletDatabaseDao {
 
     @Insert
-    fun insert(wallet: EthWallet)
+    suspend fun insert(wallet: EthWallet)
 
     @Update
     fun update(wallet: EthWallet)
@@ -19,7 +19,7 @@ interface WalletDatabaseDao {
     fun getWallet(key: Long): EthWallet?
 
     @Query("DELETE FROM eth_wallet_table")
-    fun clear()
+    suspend fun clear()
 
     @Query("SELECT * FROM eth_wallet_table ORDER BY walletId ASC")
     fun getWallets(): LiveData<List<EthWallet>>

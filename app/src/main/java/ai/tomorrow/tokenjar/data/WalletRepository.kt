@@ -9,13 +9,13 @@ class WalletRepository private constructor(private val walletDao: WalletDatabase
 
     fun getWallet(walletId: Long) = walletDao.getWallet(walletId)
 
-    fun insertWallet(wallet: EthWallet) =
+    suspend fun insertWallet(wallet: EthWallet) =
         walletDao.insert(wallet)
 
     fun updateWallet(wallet: EthWallet) =
         walletDao.update(wallet)
 
-    fun removeAllWallets() = walletDao.clear()
+    suspend fun removeAllWallets() = walletDao.clear()
 
     companion object {
 

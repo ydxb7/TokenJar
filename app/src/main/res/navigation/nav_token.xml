@@ -24,7 +24,11 @@
     <fragment
             android:id="@+id/manageFragment"
             android:name="ai.tomorrow.tokenjar.ManageFragment"
-            android:label="ManageFragment" />
+            android:label="ManageFragment" >
+        <argument
+                android:name="walletId"
+                app:argType="long" />
+    </fragment>
 
     <fragment
             android:id="@+id/importWalletViewPagerFragment"
