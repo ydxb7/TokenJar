@@ -25,19 +25,19 @@ android {
         }
     }
 
-//    packagingOptions {
-//        exclude 'META-INF/NOTICE.txt'
-//        exclude 'META-INF/LICENSE.txt'
-//        exclude 'META-INF/NOTICE'
-//        exclude 'META-INF/LICENSE'
-//        exclude 'META-INF/DEPENDENCIES'
-//        exclude 'lib/x86_64/darwin/libscrypt.dylib'
-//
-//    }
-//
-//    lintOptions {
-//        abortOnError false
-//    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'lib/x86_64/darwin/libscrypt.dylib'
+
+    }
+
+    lintOptions {
+        abortOnError false
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
