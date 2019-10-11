@@ -3,6 +3,8 @@ package ai.tomorrow.tokenjar.defaultwallet
 import ai.tomorrow.tokenjar.data.EthWallet
 import ai.tomorrow.tokenjar.data.WalletDatabaseDao
 import ai.tomorrow.tokenjar.network.EtherscanApi
+import ai.tomorrow.tokenjar.network.History
+import ai.tomorrow.tokenjar.network.ResultResponse
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
@@ -14,9 +16,9 @@ import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
 import java.math.BigDecimal
-import retrofit2.Callback
 
 const val UPDATE_FREQUENCY = 30000L
 
@@ -38,9 +40,9 @@ class DefaultWalletViewModel internal constructor(
         get() = _balanceString
 
 
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private val _historyResponse = MutableLiveData<List<History>>()
+    val historyResponse: LiveData<List<History>>
+        get() = _historyResponse
 
     private val backgroundThreadRunner = object : Runnable {
         override fun run() {
@@ -90,6 +92,7 @@ class DefaultWalletViewModel internal constructor(
         return Convert.fromWei(BigDecimal(wei), Convert.Unit.ETHER)
     }
 
+
     private fun getHistory() {
 
         EtherscanApi.retrofitService.getHistory(
@@ -102,20 +105,19 @@ class DefaultWalletViewModel internal constructor(
             10,
             "asc",
             "YourApiKeyToken"
-        ).enqueue(object : Callback<String> {
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-                Log.d(TAG, "onFailure: _response.value = ${_response.value}")
+        ).enqueue( object: Callback<ResultResponse> {
+            override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+                _historyResponse.value = null
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = response.body()
-                Log.d(TAG, "onResponse: _response.value = ${_response.value}")
+            override fun onResponse(call: Call<ResultResponse>, response: Response<ResultResponse>) {
+                _historyResponse.value = response.body()?.result
+                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value?.size}")
+                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
             }
         })
 
     }
-
 
     override fun onCleared() {
         super.onCleared()

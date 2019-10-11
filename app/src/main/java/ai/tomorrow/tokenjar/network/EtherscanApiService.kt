@@ -1,7 +1,10 @@
 package ai.tomorrow.tokenjar.network
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Call
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -9,14 +12,29 @@ import retrofit2.http.Query
 private const val BASE_URL = "http://api-ropsten.etherscan.io/"
 //private const val BASE_URL = "https://mars.udacity.com/"
 
+
+//private val retrofit = Retrofit.Builder()
+//    .addConverterFactory(ScalarsConverterFactory.create())
+//    .baseUrl(BASE_URL)
+//    .build()
+
+/**
+ * Build the Moshi object that Retrofit will be using, making sure to add the Kotlin adapter for
+ * full Kotlin compatibility.
+ */
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
+
 /**
  * Use the Retrofit builder to build a retrofit object using a Moshi converter with our Moshi
  * object pointing to the desired URL
  */
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(ScalarsConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(BASE_URL)
     .build()
+
 
 interface EtherscanApiService {
 
@@ -31,7 +49,7 @@ interface EtherscanApiService {
                    @Query("sort") sort: String,
                    @Query("apikey") apikey: String
     ):
-            Call<String>
+            Call<ResultResponse>
 }
 
 /**
