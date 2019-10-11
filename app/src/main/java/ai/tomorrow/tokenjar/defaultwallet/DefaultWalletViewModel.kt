@@ -11,6 +11,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
@@ -18,6 +22,7 @@ import org.web3j.utils.Convert
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 import java.math.BigDecimal
 
 const val UPDATE_FREQUENCY = 30000L
@@ -44,6 +49,10 @@ class DefaultWalletViewModel internal constructor(
     private val _historyResponse = MutableLiveData<List<History>>()
     val historyResponse: LiveData<List<History>>
         get() = _historyResponse
+
+
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(viewModelJob + Dispatchers.Main )
 
     private val backgroundThreadRunner = object : Runnable {
         override fun run() {
@@ -95,32 +104,36 @@ class DefaultWalletViewModel internal constructor(
 
     fun getHistory(address: String) {
 
-        EtherscanApi.retrofitService.getHistory(
-            "account",
-            "txlist",
-            address,
-            0,
-            99999999,
-            1,
-            10,
-            "asc",
-            API_KEY_TOKEN
-        ).enqueue( object: Callback<ResultResponse> {
-            override fun onFailure(call: Call<ResultResponse>, t: Throwable) {
+        uiScope.launch {
+
+            var getHistoryDeferred = EtherscanApi.retrofitService.getHistory(
+                "account",
+                "txlist",
+                address,
+                0,
+                99999999,
+                1,
+                10,
+                "asc",
+                API_KEY_TOKEN
+            )
+
+            try {
+                var response = getHistoryDeferred.await()
+                _historyResponse.value = response.result
+                Log.d(TAG, "_historyResponse.value size = ${_historyResponse.value?.size}")
+                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
+            } catch (e: Exception){
+                Log.d(TAG, "Fail: ${e.message}")
                 _historyResponse.value = null
             }
 
-            override fun onResponse(call: Call<ResultResponse>, response: Response<ResultResponse>) {
-                _historyResponse.value = response.body()?.result
-                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value?.size}")
-                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
-            }
-        })
-
+        }
     }
 
     override fun onCleared() {
         super.onCleared()
         stopUpdateBalance()
+        viewModelJob.cancel()
     }
 }
