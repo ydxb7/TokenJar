@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:background="@drawable/white_grey_border_top">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-            android:id="@+id/timeTv"
-            android:layout_width="wrap_content"
+    <data>
+        <variable
+                name="isFrom"
+                type="boolean" />
+        <variable
+                name="history"
+                type="ai.tomorrow.tokenjar.data.DatabaseHistory" />
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="10/9/2019 at 19:31" />
+            android:background="@drawable/white_grey_border_top"
+            android:padding="8dp">
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/timeTv"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            tools:text="From: 0x3bAF284A...fFD"/>
+        <TextView
+                android:id="@+id/timeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="10/9/2019 at 19:31" />
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            tools:text="+2.1 ETH"
-            android:layout_centerVertical="true"
-            android:textColor="@color/green"
-            android:textSize="20sp"
-        />
+        <TextView
+                android:id="@+id/fromTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timeTv"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:isGone="@{isFrom}"
+                tools:text="From: " />
 
-</RelativeLayout>
+        <TextView
+                android:id="@+id/toTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timeTv"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                app:isGone="@{!isFrom}"
+                tools:text="To: " />
+
+        <TextView
+                android:id="@+id/addressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/timeTv"
+                android:textColor="@color/black"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                tools:text="From: 0x3bAF284A...fFD" />
+
+        <TextView
+                android:id="@+id/valueTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                tools:text="+2.1 ETH" />
+
+    </RelativeLayout>
+</layout>

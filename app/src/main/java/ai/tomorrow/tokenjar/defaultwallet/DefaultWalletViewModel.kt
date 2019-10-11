@@ -1,6 +1,7 @@
 package ai.tomorrow.tokenjar.defaultwallet
 
 import ai.tomorrow.tokenjar.data.*
+import ai.tomorrow.tokenjar.network.History
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
@@ -31,6 +32,9 @@ class DefaultWalletViewModel internal constructor(
     private lateinit var backgroundThread: HandlerThread
 
     val repository = HistoryRepository(historyDatabase)
+    val historyDao = historyDatabase.historyDatabaseDao
+
+    val allHistories: LiveData<List<DatabaseHistory>> = historyDao.getAllHistory()
 
     val wallet: LiveData<EthWallet?> = database.getFirstWallet()
 
@@ -96,46 +100,9 @@ class DefaultWalletViewModel internal constructor(
         return Convert.fromWei(BigDecimal(wei), Convert.Unit.ETHER)
     }
 
-
-    fun refreshHistory(address: String) {
-        uiScope.launch {
-            repository.refreshHistories(address)
-        }
-
-    }
-
-    fun refreshDataFromNetwork(address: String) = uiScope.launch {
+    fun refreshHistoryDatabaseFromNetwork(address: String) = uiScope.launch {
         repository.refreshHistories(address)
     }
-
-//    fun getHistory(address: String) {
-//
-//        uiScope.launch {
-//
-//            var getHistoryDeferred = EtherscanApi.retrofitService.getHistory(
-//                "account",
-//                "txlist",
-//                address,
-//                0,
-//                99999999,
-//                1,
-//                10,
-//                "asc",
-//                API_KEY_TOKEN
-//            )
-//
-//            try {
-//                var response = getHistoryDeferred.await()
-//                _historyResponse.value = response.result
-//                Log.d(TAG, "_historyResponse.value size = ${_historyResponse.value?.size}")
-//                Log.d(TAG, "_historyResponse.value = ${_historyResponse.value}")
-//            } catch (e: Exception){
-//                Log.d(TAG, "Fail: ${e.message}")
-//                _historyResponse.value = null
-//            }
-//
-//        }
-//    }
 
     override fun onCleared() {
         super.onCleared()

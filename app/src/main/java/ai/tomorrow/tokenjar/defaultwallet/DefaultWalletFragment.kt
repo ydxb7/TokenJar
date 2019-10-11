@@ -1,7 +1,7 @@
 package ai.tomorrow.tokenjar.defaultwallet
 
 import ai.tomorrow.tokenjar.HomeViewPagerFragmentDirections
-import ai.tomorrow.tokenjar.adapters.ManageWalletAdapter
+import ai.tomorrow.tokenjar.adapters.HistoryAdapter
 import ai.tomorrow.tokenjar.data.HistoryDatabase
 import ai.tomorrow.tokenjar.data.WalletDatabase
 import ai.tomorrow.tokenjar.databinding.FragmentDefaultWalletBinding
@@ -20,6 +20,7 @@ class DefaultWalletFragment : Fragment(){
     private val TAG = "DefaultWalletFragment"
 
     private lateinit var binding: FragmentDefaultWalletBinding
+    private var adapter: HistoryAdapter? = null
 
     private val viewModel: DefaultWalletViewModel by viewModels {
         val application = requireNotNull(this.activity).application
@@ -34,6 +35,8 @@ class DefaultWalletFragment : Fragment(){
         binding = FragmentDefaultWalletBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
+
+
 
         subscribeUi()
 
@@ -59,12 +62,20 @@ class DefaultWalletFragment : Fragment(){
             Log.d(TAG, "current wallet = $wallet")
             if(wallet != null){
                 viewModel.startUpdateBalance()
-                viewModel.refreshDataFromNetwork(wallet.address)
+                viewModel.refreshHistoryDatabaseFromNetwork(wallet.address)
+                adapter = HistoryAdapter(wallet.address)
+                binding.historyRecyclerView.adapter = adapter
 //                refreshHistories
                 binding.hasWallet = true
             } else{
                 binding.hasWallet = false
             }
+        }
+
+        viewModel.allHistories.observe(viewLifecycleOwner) { histories ->
+            Log.d(TAG, "histories size = ${histories.size}")
+            Log.d(TAG, "histories = ${histories}")
+            adapter?.submitList(histories)
         }
     }
 
