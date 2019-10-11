@@ -10,7 +10,7 @@ data class EthWallet(
     var walletId: Long = 0L,
 
     @ColumnInfo(name = "address")
-    val address: String = "",
+    var address: String = "",
 
     @ColumnInfo(name = "name")
     var name: String = "",

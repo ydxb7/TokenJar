@@ -10,7 +10,7 @@ import androidx.room.Update
 interface WalletDatabaseDao {
 
     @Insert
-    suspend fun insert(wallet: EthWallet)
+    fun insert(wallet: EthWallet)
 
     @Update
     fun update(wallet: EthWallet)

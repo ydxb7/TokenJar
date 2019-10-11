@@ -30,7 +30,6 @@ class ManageWalletAdapter :
         private val binding: ListItemManageWalletBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
-            // TODO navigate to ManageFragment
             binding.setClickListener { view ->
                 Log.d("ManageWalletAdapter", "click to navigate to manage")
                 binding.wallet?.let { wallet ->

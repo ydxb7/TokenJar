@@ -9,7 +9,7 @@ class WalletRepository private constructor(private val walletDao: WalletDatabase
 
     fun getWallet(walletId: Long) = walletDao.getWallet(walletId)
 
-    suspend fun insertWallet(wallet: EthWallet) =
+    fun insertWallet(wallet: EthWallet) =
         walletDao.insert(wallet)
 
     fun updateWallet(wallet: EthWallet) =

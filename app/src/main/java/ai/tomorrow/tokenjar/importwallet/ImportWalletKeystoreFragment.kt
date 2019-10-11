@@ -1,24 +1,22 @@
-package ai.tomorrow.tokenjar
+package ai.tomorrow.tokenjar.importwallet
 
 import ai.tomorrow.tokenjar.databinding.FragmentImportWalletKeystoreBinding
-import ai.tomorrow.tokenjar.databinding.FragmentImportWalletMnemonicBinding
-import ai.tomorrow.tokenjar.databinding.FragmentImportWalletPrivateKeyBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class ImportWalletPrivateKeyFragment : Fragment(){
+class ImportWalletKeystoreFragment : Fragment(){
 
-    private lateinit var binding: FragmentImportWalletPrivateKeyBinding
+    private lateinit var binding: FragmentImportWalletKeystoreBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentImportWalletPrivateKeyBinding.inflate(inflater, container, false)
+        binding = FragmentImportWalletKeystoreBinding.inflate(inflater, container, false)
 
         return binding.root
     }

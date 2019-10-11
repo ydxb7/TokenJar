@@ -1,5 +1,6 @@
-package ai.tomorrow.tokenjar
+package ai.tomorrow.tokenjar.importwallet
 
+import ai.tomorrow.tokenjar.R
 import ai.tomorrow.tokenjar.adapters.IMPORT_KEYSTORE_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.IMPORT_MNEMONIC_PAGER_INDEX
 import ai.tomorrow.tokenjar.adapters.IMPORT_PRIVATE_KEY_PAGER_INDEX

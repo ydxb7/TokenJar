@@ -1,6 +1,8 @@
 package ai.tomorrow.tokenjar.adapters
 
-import ai.tomorrow.tokenjar.*
+import ai.tomorrow.tokenjar.importwallet.ImportWalletKeystoreFragment
+import ai.tomorrow.tokenjar.importwallet.ImportWalletMnemonicFragment
+import ai.tomorrow.tokenjar.importwallet.ImportWalletPrivateKeyFragment
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import java.lang.IndexOutOfBoundsException
