@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
 
     <data>
+
         <variable
                 name="hasWallet"
                 type="boolean" />
@@ -82,9 +83,9 @@
                     android:layout_below="@id/logo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
+                    android:text="0 ETH"
                     android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:text="0 ETH" />
+                    android:textSize="30sp" />
 
             <Button
                     android:id="@+id/sendBtn"
@@ -96,33 +97,35 @@
                     android:background="@drawable/send_button"
                     android:text="send"
                     android:textColor="@color/secondaryDarkColor"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    app:isGone="@{!hasWallet}" />
 
             <TextView
                     android:id="@+id/historyTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/sendBtn"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
                     android:text="History"
                     android:textSize="16sp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    app:isGone="@{!hasWallet}" />
 
             <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/historyRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/historyTv"
-                    android:id="@+id/historyRecyclerView"
-                    app:isGone="@{!hasWallet}"/>
+                    app:isGone="@{!hasWallet}" />
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="You have no wallet"
-                    app:isGone="@{hasWallet}"
-                    android:textSize="35sp" />
+                    android:textSize="35sp"
+                    app:isGone="@{hasWallet}" />
 
         </RelativeLayout>
     </FrameLayout>
