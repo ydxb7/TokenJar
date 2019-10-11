@@ -25,5 +25,5 @@ interface WalletDatabaseDao {
     fun getWallets(): LiveData<List<EthWallet>>
 
     @Query("SELECT * FROM eth_wallet_table ORDER BY walletId ASC LIMIT 1")
-    fun getFirstWallet(): EthWallet?
+    fun getFirstWallet(): LiveData<EthWallet?>
 }

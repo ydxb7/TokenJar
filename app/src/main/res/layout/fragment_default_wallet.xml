@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools">
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <data>
+        <variable
+                name="hasWallet"
+                type="boolean" />
+    </data>
+
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -104,14 +113,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/historyTv"
-                    android:id="@+id/historyRecyclerView"/>
+                    android:id="@+id/historyRecyclerView"
+                    app:isGone="@{!hasWallet}"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="default wallet"
-                    android:textSize="45sp" />
+                    android:text="You have no wallet"
+                    app:isGone="@{hasWallet}"
+                    android:textSize="35sp" />
 
         </RelativeLayout>
     </FrameLayout>
