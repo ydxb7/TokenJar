@@ -2,6 +2,7 @@ package ai.tomorrow.tokenjar.defaultwallet
 
 import ai.tomorrow.tokenjar.data.EthWallet
 import ai.tomorrow.tokenjar.data.WalletDatabaseDao
+import ai.tomorrow.tokenjar.network.EtherscanApi
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
@@ -12,7 +13,10 @@ import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
+import retrofit2.Call
+import retrofit2.Response
 import java.math.BigDecimal
+import retrofit2.Callback
 
 const val UPDATE_FREQUENCY = 30000L
 
@@ -34,14 +38,20 @@ class DefaultWalletViewModel internal constructor(
         get() = _balanceString
 
 
+    private val _response = MutableLiveData<String>()
+    val response: LiveData<String>
+        get() = _response
 
     private val backgroundThreadRunner = object : Runnable {
         override fun run() {
-            Log.d(TAG, "backgroundThreadRunner, thread name: ${Thread.currentThread().name}, wallet.value = ${wallet.value}" )
+            Log.d(
+                TAG,
+                "backgroundThreadRunner, thread name: ${Thread.currentThread().name}, wallet.value = ${wallet.value}"
+            )
 
             uiHandler.post {
                 if (wallet.value != null) {
-                    _balanceString.value ="${getBalance(wallet.value)} ETH"
+                    _balanceString.value = "${getBalance(wallet.value)} ETH"
                 }
             }
 
@@ -53,13 +63,14 @@ class DefaultWalletViewModel internal constructor(
         backgroundThread = HandlerThread("backgroundHandler")
         backgroundThread.start()
         backgroundHandler = Handler(backgroundThread.looper)
+        getHistory()
     }
 
     fun startUpdateBalance() {
         backgroundHandler.post(backgroundThreadRunner)
     }
 
-    fun stopUpdateBalance(){
+    fun stopUpdateBalance() {
         backgroundHandler.removeCallbacks(backgroundThreadRunner)
     }
 
@@ -77,6 +88,32 @@ class DefaultWalletViewModel internal constructor(
 
         val wei = ethGetBalance.balance
         return Convert.fromWei(BigDecimal(wei), Convert.Unit.ETHER)
+    }
+
+    private fun getHistory() {
+
+        EtherscanApi.retrofitService.getHistory(
+            "account",
+            "txlist",
+            "0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a",
+            0,
+            99999999,
+            1,
+            10,
+            "asc",
+            "YourApiKeyToken"
+        ).enqueue(object : Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+                Log.d(TAG, "onFailure: _response.value = ${_response.value}")
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _response.value = response.body()
+                Log.d(TAG, "onResponse: _response.value = ${_response.value}")
+            }
+        })
+
     }
 
 
