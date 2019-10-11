@@ -7,12 +7,12 @@ class WalletRepository private constructor(private val walletDao: WalletDatabase
 
     fun getWallets() = walletDao.getWallets()
 
-    fun getWallet(walletId: Long) = walletDao.getWallet(walletId)
+    suspend fun getWallet(walletId: Long) = walletDao.getWallet(walletId)
 
-    fun insertWallet(wallet: EthWallet) =
+    suspend fun insertWallet(wallet: EthWallet) =
         walletDao.insert(wallet)
 
-    fun updateWallet(wallet: EthWallet) =
+    suspend fun updateWallet(wallet: EthWallet) =
         walletDao.update(wallet)
 
     suspend fun removeAllWallets() = walletDao.clear()

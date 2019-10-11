@@ -11,19 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import kotlinx.coroutines.*
 import org.consenlabs.tokencore.wallet.Identity
 import org.consenlabs.tokencore.wallet.KeystoreStorage
 import org.consenlabs.tokencore.wallet.WalletManager
-import org.consenlabs.tokencore.wallet.model.Network
 import org.consenlabs.tokencore.wallet.model.Metadata
+import org.consenlabs.tokencore.wallet.model.Network
 import java.io.File
 
-class ImportWalletMnemonicFragment : Fragment() , KeystoreStorage {
+class ImportWalletMnemonicFragment : Fragment(), KeystoreStorage {
 
     private val TAG = "ImportWalletMnemonic"
 
     private lateinit var binding: FragmentImportWalletMnemonicBinding
     private lateinit var identity: Identity
+    private var job = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + job)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,27 +40,34 @@ class ImportWalletMnemonicFragment : Fragment() , KeystoreStorage {
         WalletManager.scanWallets()
 
         binding.importWalletBtn.setOnClickListener {
-            if (binding.passwordHintEt.text.isEmpty() || binding.repeatPasswordEt.text.isEmpty()) {
+            if (binding.walletPasswordEt.text.isEmpty() || binding.repeatPasswordEt.text.isEmpty()) {
                 Toast.makeText(context, "Password is required.", Toast.LENGTH_SHORT).show()
-            } else if (binding.passwordHintEt.text != binding.repeatPasswordEt.text) {
+            } else if (binding.walletPasswordEt.text.toString() != binding.repeatPasswordEt.text.toString()) {
+                Log.d(TAG, "password: ${binding.walletPasswordEt.text}")
+                Log.d(TAG, "repeat password: ${binding.repeatPasswordEt.text}")
                 Toast.makeText(context, "Passwords do not match.", Toast.LENGTH_SHORT).show()
             } else if (binding.mnemonicEv.text.isEmpty()) {
                 Toast.makeText(context, "Mnemonic phrases is required.", Toast.LENGTH_SHORT).show()
             } else {
                 Log.d(TAG, "create wallet.")
                 val wallet = getWalletFromMnemonic(binding.mnemonicEv.text.toString())
-                val walletRepository =
-                    WalletRepository.getInstance(WalletDatabase.getInstance(requireContext()).walletDatabaseDao)
-                walletRepository.insertWallet(wallet)
+
+                uiScope.launch {
+                    insert(wallet)
+                }
+                it.findNavController().navigateUp()
             }
-
-
         }
-
-
-
-
         return binding.root
+    }
+
+    private suspend fun insert(wallet: EthWallet) {
+        withContext(Dispatchers.IO) {
+            val walletRepository =
+                WalletRepository.getInstance(WalletDatabase.getInstance(requireContext()).walletDatabaseDao)
+            walletRepository.insertWallet(wallet)
+        }
+        Log.d(TAG, "successfully insert the wallet!")
     }
 
     private fun getWalletFromMnemonic(mnemonic: String): EthWallet {
@@ -64,7 +75,7 @@ class ImportWalletMnemonicFragment : Fragment() , KeystoreStorage {
         val passwordHint = binding.passwordHintEt.text.toString()
 
         identity = Identity.recoverIdentity(
-            binding.mnemonicEv.text.toString(),
+            mnemonic.trim(),
             "identity1",
             password,
             passwordHint,
@@ -80,9 +91,15 @@ class ImportWalletMnemonicFragment : Fragment() , KeystoreStorage {
         wallet.keystorePath =
             requireActivity().filesDir.absolutePath + "/wallets" + "/${tokenCoreWallet.id}.json"
         wallet.privateKey = WalletManager.exportPrivateKey(tokenCoreWallet.id, password)
-        wallet.mnemonic = WalletManager.exportMnemonic(tokenCoreWallet.id, "").mnemonic
+        wallet.mnemonic = WalletManager.exportMnemonic(tokenCoreWallet.id, password).mnemonic
         wallet.name = "new wallet"
 
+        Log.d(TAG, "wallet.address = ${wallet.address}")
+        Log.d(TAG, "wallet.keystore = ${wallet.keystore}")
+        Log.d(TAG, "wallet.keystorePath = ${wallet.keystorePath}")
+        Log.d(TAG, "wallet.privateKey = ${wallet.privateKey}")
+        Log.d(TAG, "wallet.mnemonic = ${wallet.mnemonic}")
+        Log.d(TAG, "wallet.name = ${wallet.name}")
         return wallet
     }
 
