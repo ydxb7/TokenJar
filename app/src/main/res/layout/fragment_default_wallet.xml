@@ -10,6 +10,10 @@
         <variable
                 name="hasWallet"
                 type="boolean" />
+
+        <variable
+                name="viewModel"
+                type="ai.tomorrow.tokenjar.defaultwallet.DefaultWalletViewModel" />
     </data>
 
 
@@ -51,6 +55,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="20sp"
                                 android:textStyle="bold"
+                                android:text="@{viewModel.wallet.name}"
                                 tools:text="wallet name" />
 
                         <TextView
@@ -58,6 +63,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/walletNameTv"
                                 android:layout_centerHorizontal="true"
+                                android:text="@{viewModel.wallet.address}"
                                 tools:text="0x3bAF...FD" />
 
                     </RelativeLayout>
@@ -83,7 +89,7 @@
                     android:layout_below="@id/logo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="0 ETH"
+                    android:text="@{viewModel.balanceString}"
                     android:textColor="@color/black"
                     android:textSize="30sp" />
 

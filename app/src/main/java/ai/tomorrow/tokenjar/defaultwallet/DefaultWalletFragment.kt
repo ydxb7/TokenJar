@@ -29,6 +29,7 @@ class DefaultWalletFragment : Fragment(){
 
         binding = FragmentDefaultWalletBinding.inflate(inflater, container, false)
 
+        binding.viewModel = viewModel
 
         subscribeUi()
 
@@ -52,7 +53,23 @@ class DefaultWalletFragment : Fragment(){
     private fun subscribeUi() {
         viewModel.wallet.observe(viewLifecycleOwner) { wallet ->
             Log.d(TAG, "current wallet = $wallet")
-            binding.hasWallet = (wallet != null)
+            if(wallet != null){
+                viewModel.startUpdateBalance()
+                binding.hasWallet = true
+            } else{
+                binding.hasWallet = false
+            }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.startUpdateBalance()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.stopUpdateBalance()
+    }
+
 }
