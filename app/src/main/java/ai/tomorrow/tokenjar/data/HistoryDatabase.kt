@@ -24,7 +24,7 @@ abstract class HistoryDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         HistoryDatabase::class.java,
-                        "wallet_database"
+                        "history_database"
                     )
                         .fallbackToDestructiveMigration()
                         .build()
