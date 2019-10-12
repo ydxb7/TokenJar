@@ -44,7 +44,7 @@ class DefaultWalletViewModel internal constructor(
     val balanceString: LiveData<String>
         get() = _balanceString
 
-
+    // TODO _historyResponse 从来没有被赋值过！！！！！！ 所以永远显示不了history
     private val _historyResponse = MutableLiveData<List<DatabaseHistory>>()
     val historyResponse: LiveData<List<DatabaseHistory>>
         get() = _historyResponse
